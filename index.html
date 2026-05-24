@@ -2,412 +2,17 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Sertifikat</title>
 
-<link rel="stylesheet"
-href="style.css">
-
-</head>
-<body>
-
-<div class="splash" id="splash">
-<h1>PGM INDONESIA</h1>
-</div>
-
-<div class="container">
-
-<h2>Cek Sertifikat</h2>
-
-<input
-type="text"
-id="nik"
-placeholder="Masukkan NIK">
-
-<button onclick="cekData()">
-CEK DATA
-</button>
-
-<div id="hasil"></div>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
-
-<head>
-
-  <base target="_top">
-
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <style>
-
-    *{
-      box-sizing:border-box;
-      margin:0;
-      padding:0;
-    }
-
-    html, body{
-      width:100%;
-      min-height:100%;
-      font-family:Arial, sans-serif;
-      background:#f1f5f9;
-    }
-
-    body{
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      padding:20px;
-    }
-
-    .box{
-      width:100%;
-      max-width:500px;
-      background:white;
-      padding:35px 25px;
-      border-radius:20px;
-      box-shadow:0 4px 15px rgba(0,0,0,0.15);
-      text-align:center;
-    }
-
-    .logo{
-      width:100px;
-      margin-bottom:15px;
-    }
-
-    h2{
-      color:#00695c;
-      font-size:28px;
-      line-height:1.4;
-      margin-bottom:25px;
-    }
-
-    .subjudul{
-      color:#666;
-      font-size:16px;
-      margin-bottom:20px;
-    }
-
-    input{
-      width:100%;
-      padding:16px;
-      border-radius:12px;
-      border:1px solid #ccc;
-      font-size:18px;
-      margin-bottom:15px;
-      outline:none;
-    }
-
-    input:focus{
-      border-color:#00695c;
-    }
-
-    button{
-      width:100%;
-      padding:16px;
-      border:none;
-      border-radius:12px;
-      background:#00695c;
-      color:white;
-      font-size:18px;
-      font-weight:bold;
-      cursor:pointer;
-      transition:0.3s;
-    }
-
-    button:hover{
-      background:#004d40;
-    }
-
-    #hasil{
-      margin-top:25px;
-      line-height:1.8;
-      font-size:16px;
-    }
-
-    .info{
-      background:#f8fafc;
-      padding:15px;
-      border-radius:12px;
-      margin-top:15px;
-      border:1px solid #e2e8f0;
-    }
-
-    @media(max-width:480px){
-
-      body{
-        padding:15px;
-      }
-
-      .box{
-        max-width:100%;
-        padding:30px 20px;
-      }
-
-      .logo{
-        width:85px;
-      }
-
-      h2{
-        font-size:24px;
-      }
-
-      .subjudul{
-        font-size:15px;
-      }
-
-      input,
-      button{
-        font-size:17px;
-        padding:15px;
-      }
-
-    }
-.qr-area{
-
-  margin-top:25px;
-
-  text-align:center;
-
-}
-
-.qr{
-
-  width:140px;
-
-  height:140px;
-
-  border-radius:12px;
-
-  background:white;
-
-  padding:8px;
-
-  border:1px solid #ddd;
-
-}
-
-.qr-text{
-
-  margin-top:10px;
-
-  font-size:13px;
-
-  color:#666;
-
-}
-  </style>
-
-</head>
-
-<body>
-
-<div class="box">
-
-  <!-- GANTI LINK LOGO -->
-  <img src="https://i.imgur.com/aLYPqyB.png" class="logo">
-
-  <h2>
-    DOWNLOAD SERTIFIKAT<br>
-    ANGGOTA PGM INDONESIA KBB
-  </h2>
-
-  <div class="subjudul">
-    Silahkan login menggunakan NIK
-  </div>
-
-  <input type="text" id="nik" placeholder="Masukkan NIK">
-
-  <button onclick="login()">
-  LOGIN
-</button>
-
-<!-- QR CODE -->
-<div class="qr-area">
-
-  <img src="https://i.imgur.com/uIo9Gdx.png" class="qr">
-
-  <div class="qr-text">
-    Scan QR Code untuk membuka portal
-  </div>
-
-</div>
-
-<div id="hasil"></div>
-
-</div>
-
-<script>
-
-function login(){
-
-  var nik = document.getElementById("nik").value;
-
-  if(nik == ""){
-
-    document.getElementById("hasil").innerHTML = `
-      <div class="info">
-        Silahkan masukkan NIK terlebih dahulu
-      </div>
-    `;
-
-    return;
-  }
-
-  google.script.run.withSuccessHandler(function(data){
-
-    // DATA TIDAK ADA
-    if(data == null){
-
-      document.getElementById("hasil").innerHTML =
-
-      `
-      <div class="info">
-
-        Data tidak ditemukan
-
-        <br><br>
-
-        <a href="https://forms.gle/ynNLx3K9auXjd8aK8" target="_blank">
-          <button>ISI DATA TAHAP KEDUA</button>
-        </a>
-
-</div>
-`;
-
-    }
-
-    // BELUM BAYAR
-    else if(data[2] != "SUDAH"){
-
-  document.getElementById("hasil").innerHTML =
-
-  `
-  <div class="info">
-
-    Silahkan melakukan pembayaran terlebih dahulu
-
-    <br><br>
-
-    <a href="https://forms.gle/cTWXWnRoER6a9Nns7" target="_blank">
-
-      <button>
-        UPLOAD BUKTI PEMBAYARAN
-      </button>
-
-    </a>
-
-    <br><br>
-
-    <div style="
-      background:#ffffff;
-      border:1px solid #ddd;
-      padding:12px;
-      border-radius:10px;
-      font-size:14px;
-      line-height:1.8;
-      text-align:left;
-    ">
-
-      <b>Transfer Pembayaran :</b>
-
-      <br>
-
-      BJB : 0082949143100
-
-      <br>
-
-      A.n : PERKUMPULAN GURU MADRASAH KBB
-
-    </div>
-
-  </div>
-  `;
-
-}
-
-    // MENUNGGU VALIDASI
-    else if(data[3].toString().trim() == "MENUNGGU"){
-
-      document.getElementById("hasil").innerHTML =
-
-      `
-      <div class="info">
-        Bukti transfer sedang divalidasi admin
-      </div>
-      `;
-
-    }
-
-    // DITOLAK
-    else if(data[3].toString().trim() == "DITOLAK"){
-
-      document.getElementById("hasil").innerHTML =
-
-      `
-      <div class="info">
-
-        Bukti transfer ditolak
-
-        <br><br>
-
-        <a href="https://forms.gle/cTWXWnRoER6a9Nns7" target="_blank">
-          <button>UPLOAD ULANG</button>
-        </a>
-
-      </div>
-      `;
-
-    }
-
-    // VALID
-    else if(data[3].toString().trim() == "VALID"){
-
-      document.getElementById("hasil").innerHTML =
-
-      `
-      <div class="info">
-
-        Selamat datang <b>${data[1]}</b>
-
-        <br><br>
-
-        <a href="${data[4]}" target="_blank">
-          <button>DOWNLOAD SERTIFIKAT</button>
-        </a>
-
-      </div>
-      `;
-
-    }
-
-    else{
-
-      document.getElementById("hasil").innerHTML =
-
-      `
-      <div class="info">
-        Status belum tersedia
-      </div>
-      `;
-
-    }
-
-  }).cekNIK(nik);
-
-}
+<style>
 body{
 margin:0;
 font-family:Arial;
 background:#f5f7fb;
 }
 
+/* Splash Screen */
 .splash{
 position:fixed;
 width:100%;
@@ -421,6 +26,7 @@ z-index:999;
 font-size:30px;
 }
 
+/* Container */
 .container{
 padding:25px;
 max-width:400px;
@@ -428,6 +34,7 @@ margin:auto;
 margin-top:100px;
 }
 
+/* Input */
 input{
 width:100%;
 padding:15px;
@@ -437,6 +44,7 @@ margin-top:15px;
 font-size:16px;
 }
 
+/* Button */
 button{
 width:100%;
 padding:15px;
@@ -446,8 +54,10 @@ border:none;
 border-radius:12px;
 margin-top:15px;
 font-size:16px;
+cursor:pointer;
 }
 
+/* Card */
 .card{
 background:white;
 padding:20px;
@@ -456,142 +66,117 @@ margin-top:20px;
 box-shadow:0 5px 15px rgba(0,0,0,.1);
 }
 </style>
+
+</head>
+
+<body>
+
+<!-- SPLASH -->
+<div class="splash" id="splash">
+<h1>PGM INDONESIA</h1>
+</div>
+
+<!-- MAIN -->
+<div class="container">
+
+<h2>Cek Sertifikat</h2>
+
+<input type="text" id="nik" placeholder="Masukkan NIK">
+
+<button onclick="cekData()">CEK DATA</button>
+
+<div id="hasil"></div>
+
+</div>
+
+<script>
+// Splash hilang
 setTimeout(()=>{
-
-document
-.getElementById("splash")
-.style.display="none";
-
+document.getElementById("splash").style.display="none";
 },2000);
 
+// CEK DATA
 async function cekData(){
 
-const nik =
-document.getElementById("nik").value;
-
-const hasil =
-document.getElementById("hasil");
+const nik = document.getElementById("nik").value;
+const hasil = document.getElementById("hasil");
 
 hasil.innerHTML="Loading...";
 
-const url =
-"URL_WEBAPP?nik="+nik;
+// GANTI INI DENGAN URL WEB APP GOOGLE SCRIPT KAMU
+const url = "https://script.google.com/macros/s/AKfycbzeu0BNbOEXI_LEMl09x76-AhZwWtEdGC9b5hbBq_kz4YA38l6TdWJSZqQJdI8taZYuSA/exec=" + nik;
 
-const res =
-await fetch(url);
+try {
 
-const data =
-await res.json();
+const res = await fetch(url);
+const data = await res.json();
 
-if(data.status==false){
-
-hasil.innerHTML=`
-
+// DATA TIDAK DITEMUKAN
+if(data.status == false){
+hasil.innerHTML = `
 <div class="card">
-
 <h3>Data tidak ditemukan</h3>
-
-<a href="LINK_FORM_PENDATAAN">
-<button>
-ISI FORM PENDATAAN
-</button>
+<a href="https://docs.google.com/forms/d/e/1FAIpQLSdH_u5r3WfNFy1GiKZiwADM4APD586MGgsUmvTXGwq5cYaGlA/viewform">
+<button>ISI FORM PENDATAAN</button>
 </a>
-
-</div>
-`;
-
+</div>`;
 return;
 }
 
-if(data.bayar=="BELUM"){
-
-hasil.innerHTML=`
-
+// BELUM BAYAR
+if(data.bayar == "BELUM"){
+hasil.innerHTML = `
 <div class="card">
-
-<h3>
-Silahkan lakukan pembayaran
-</h3>
-
-<a href="LINK_FORM_BAYAR">
-
-<button>
-UPLOAD BUKTI
-</button>
-
+<h3>Silahkan lakukan pembayaran</h3>
+<a href="https://docs.google.com/forms/d/11Tx6Qxfwuw2dcpKNngb_ESI9e_RFiFCyH6a4SishDuo/edit">
+<button>UPLOAD BUKTI</button>
 </a>
-
-</div>
-`;
-
+</div>`;
 return;
 }
 
-if(data.validasi=="VALIDASI"){
-
-hasil.innerHTML=`
-
+// MASIH VALIDASI
+if(data.validasi == "VALIDASI"){
+hasil.innerHTML = `
 <div class="card">
-
-<h3>
-Bukti sedang divalidasi admin
-</h3>
-
-</div>
-`;
-
+<h3>Bukti sedang divalidasi admin</h3>
+</div>`;
 return;
 }
 
-if(data.validasi=="DITOLAK"){
-
-hasil.innerHTML=`
-
+// DITOLAK
+if(data.validasi == "DITOLAK"){
+hasil.innerHTML = `
 <div class="card">
-
-<h3>
-Bukti ditolak
-</h3>
-
+<h3>Bukti ditolak</h3>
 <p>${data.ket}</p>
-
-<a href="LINK_FORM_BAYAR">
-
-<button>
-UPLOAD ULANG
-</button>
-
+<a href="https://docs.google.com/forms/d/11Tx6Qxfwuw2dcpKNngb_ESI9e_RFiFCyH6a4SishDuo/edit">
+<button>UPLOAD ULANG</button>
 </a>
-
-</div>
-`;
-
+</div>`;
 return;
 }
 
-if(data.validasi=="VALID"){
-
-hasil.innerHTML=`
-
+// VALID (LOLOS)
+if(data.validasi == "VALID"){
+hasil.innerHTML = `
 <div class="card">
-
 <h2>${data.nama}</h2>
-
 <a href="${data.sertifikat}">
-
-<button>
-DOWNLOAD SERTIFIKAT
-</button>
-
+<button>DOWNLOAD SERTIFIKAT</button>
 </a>
+</div>`;
+return;
+}
 
-</div>
-`;
-
+} catch (error) {
+hasil.innerHTML = `
+<div class="card">
+<h3>Terjadi kesalahan server</h3>
+</div>`;
 }
 
 }
-  
 </script>
 
 </body>
