@@ -1,232 +1,372 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width,initial-scale=1.0">
-<title>Sertifikat</title>
 
-<link rel="stylesheet"
-href="style.css">
-<style>
-  body{
-margin:0;
-font-family:Arial;
-background:#f5f7fb;
+  <base target="_top">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <style>
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html, body{
+      width:100%;
+      min-height:100%;
+      font-family:Arial, sans-serif;
+      background:#f1f5f9;
+    }
+
+    body{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:20px;
+    }
+
+    .box{
+      width:100%;
+      max-width:500px;
+      background:white;
+      padding:35px 25px;
+      border-radius:20px;
+      box-shadow:0 4px 15px rgba(0,0,0,0.15);
+      text-align:center;
+    }
+
+    .logo{
+      width:100px;
+      margin-bottom:15px;
+    }
+
+    h2{
+      color:#00695c;
+      font-size:28px;
+      line-height:1.4;
+      margin-bottom:25px;
+    }
+
+    .subjudul{
+      color:#666;
+      font-size:16px;
+      margin-bottom:20px;
+    }
+
+    input{
+      width:100%;
+      padding:16px;
+      border-radius:12px;
+      border:1px solid #ccc;
+      font-size:18px;
+      margin-bottom:15px;
+      outline:none;
+    }
+
+    input:focus{
+      border-color:#00695c;
+    }
+
+    button{
+      width:100%;
+      padding:16px;
+      border:none;
+      border-radius:12px;
+      background:#00695c;
+      color:white;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      background:#004d40;
+    }
+
+    #hasil{
+      margin-top:25px;
+      line-height:1.8;
+      font-size:16px;
+    }
+
+    .info{
+      background:#f8fafc;
+      padding:15px;
+      border-radius:12px;
+      margin-top:15px;
+      border:1px solid #e2e8f0;
+    }
+
+    @media(max-width:480px){
+
+      body{
+        padding:15px;
+      }
+
+      .box{
+        max-width:100%;
+        padding:30px 20px;
+      }
+
+      .logo{
+        width:85px;
+      }
+
+      h2{
+        font-size:24px;
+      }
+
+      .subjudul{
+        font-size:15px;
+      }
+
+      input,
+      button{
+        font-size:17px;
+        padding:15px;
+      }
+
+    }
+.qr-area{
+
+  margin-top:25px;
+
+  text-align:center;
+
 }
 
-.splash{
-position:fixed;
-width:100%;
-height:100vh;
-background:#00695c;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:999;
-font-size:30px;
+.qr{
+
+  width:140px;
+
+  height:140px;
+
+  border-radius:12px;
+
+  background:white;
+
+  padding:8px;
+
+  border:1px solid #ddd;
+
 }
 
-.container{
-padding:25px;
-max-width:400px;
-margin:auto;
-margin-top:100px;
-}
+.qr-text{
 
-input{
-width:100%;
-padding:15px;
-border-radius:12px;
-border:1px solid #ccc;
-margin-top:15px;
-font-size:16px;
-}
+  margin-top:10px;
 
-button{
-width:100%;
-padding:15px;
-background:#00695c;
-color:white;
-border:none;
-border-radius:12px;
-margin-top:15px;
-font-size:16px;
-}
+  font-size:13px;
 
-.card{
-background:white;
-padding:20px;
-border-radius:15px;
-margin-top:20px;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
+  color:#666;
+
 }
-</style>
+  </style>
+
 </head>
+
 <body>
 
-<div class="splash" id="splash">
-<h1>PGM INDONESIA</h1>
-</div>
+<div class="box">
 
-<div class="container">
+  <!-- GANTI LINK LOGO -->
+  <img src="https://i.imgur.com/aLYPqyB.png" class="logo">
 
-<h2>Cek Sertifikat</h2>
+  <h2>
+    DOWNLOAD SERTIFIKAT<br>
+    ANGGOTA PGM INDONESIA KBB
+  </h2>
 
-<input
-type="text"
-id="nik"
-placeholder="Masukkan NIK">
+  <div class="subjudul">
+    Silahkan login menggunakan NIK
+  </div>
 
-<button onclick="cekData()">
-CEK DATA
+  <input type="text" id="nik" placeholder="Masukkan NIK">
+
+  <button onclick="login()">
+  LOGIN
 </button>
+
+<!-- QR CODE -->
+<div class="qr-area">
+
+  <img src="https://i.imgur.com/uIo9Gdx.png" class="qr">
+
+  <div class="qr-text">
+    Scan QR Code untuk membuka portal
+  </div>
+
+</div>
 
 <div id="hasil"></div>
 
 </div>
 
-<script src="script.js"></script>
+<script>
 
-  GANTI URL_WEBAPP.
-setTimeout(()=>{
+function login(){
 
-document
-.getElementById("splash")
-.style.display="none";
+  var nik = document.getElementById("nik").value;
 
-},2000);
+  if(nik == ""){
 
-async function cekData(){
+    document.getElementById("hasil").innerHTML = `
+      <div class="info">
+        Silahkan masukkan NIK terlebih dahulu
+      </div>
+    `;
 
-const nik =
-document.getElementById("nik").value;
+    return;
+  }
 
-const hasil =
-document.getElementById("hasil");
+  google.script.run.withSuccessHandler(function(data){
 
-hasil.innerHTML="Loading...";
+    // DATA TIDAK ADA
+    if(data == null){
 
-const url =
-"URL_WEBAPP?nik="+nik;
+      document.getElementById("hasil").innerHTML =
 
-const res =
-await fetch(url);
+      `
+      <div class="info">
 
-const data =
-await res.json();
+        Data tidak ditemukan
 
-if(data.status==false){
+        <br><br>
 
-hasil.innerHTML=`
-
-<div class="card">
-
-<h3>Data tidak ditemukan</h3>
-
-<a href="https://docs.google.com/forms/d/e/1FAIpQLSdH_u5r3WfNFy1GiKZiwADM4APD586MGgsUmvTXGwq5cYaGlA/viewform">
-<button>
-ISI FORM PENDATAAN
-</button>
-</a>
+        <a href="https://forms.gle/ynNLx3K9auXjd8aK8" target="_blank">
+          <button>ISI DATA TAHAP KEDUA</button>
+        </a>
 
 </div>
 `;
 
-return;
-}
+    }
 
-if(data.bayar=="BELUM"){
+    // BELUM BAYAR
+    else if(data[2] != "SUDAH"){
 
-hasil.innerHTML=`
+  document.getElementById("hasil").innerHTML =
 
-<div class="card">
+  `
+  <div class="info">
 
-<h3>
-Silahkan lakukan pembayaran
-</h3>
+    Silahkan melakukan pembayaran terlebih dahulu
 
-<a href="https://forms.gle/eo3BN1MMCDvpH9Ja6">
+    <br><br>
 
-<button>
-UPLOAD BUKTI
-</button>
+    <a href="https://forms.gle/cTWXWnRoER6a9Nns7" target="_blank">
 
-</a>
+      <button>
+        UPLOAD BUKTI PEMBAYARAN
+      </button>
 
-</div>
-`;
+    </a>
 
-return;
-}
+    <br><br>
 
-if(data.validasi=="VALIDASI"){
+    <div style="
+      background:#ffffff;
+      border:1px solid #ddd;
+      padding:12px;
+      border-radius:10px;
+      font-size:14px;
+      line-height:1.8;
+      text-align:left;
+    ">
 
-hasil.innerHTML=`
+      <b>Transfer Pembayaran :</b>
 
-<div class="card">
+      <br>
 
-<h3>
-Bukti sedang divalidasi admin
-</h3>
+      BJB : 0082949143100
 
-</div>
-`;
+      <br>
 
-return;
-}
+      A.n : PERKUMPULAN GURU MADRASAH KBB
 
-if(data.validasi=="DITOLAK"){
+    </div>
 
-hasil.innerHTML=`
-
-<div class="card">
-
-<h3>
-Bukti ditolak
-</h3>
-
-<p>${data.ket}</p>
-
-<a href="https://forms.gle/eo3BN1MMCDvpH9Ja6">
-
-<button>
-UPLOAD ULANG
-</button>
-
-</a>
-
-</div>
-`;
-
-return;
-}
-
-if(data.validasi=="VALID"){
-
-hasil.innerHTML=`
-
-<div class="card">
-
-<h2>${data.nama}</h2>
-
-<a href="${data.sertifikat}">
-
-<button>
-DOWNLOAD SERTIFIKAT
-</button>
-
-</a>
-
-</div>
-`;
+  </div>
+  `;
 
 }
 
-}
+    // MENUNGGU VALIDASI
+    else if(data[3].toString().trim() == "MENUNGGU"){
+
+      document.getElementById("hasil").innerHTML =
+
+      `
+      <div class="info">
+        Bukti transfer sedang divalidasi admin
+      </div>
+      `;
+
+    }
+
+    // DITOLAK
+    else if(data[3].toString().trim() == "DITOLAK"){
+
+      document.getElementById("hasil").innerHTML =
+
+      `
+      <div class="info">
+
+        Bukti transfer ditolak
+
+        <br><br>
+
+        <a href="https://forms.gle/cTWXWnRoER6a9Nns7" target="_blank">
+          <button>UPLOAD ULANG</button>
+        </a>
+
+      </div>
+      `;
+
+    }
+
+    // VALID
+    else if(data[3].toString().trim() == "VALID"){
+
+      document.getElementById("hasil").innerHTML =
+
+      `
+      <div class="info">
+
+        Selamat datang <b>${data[1]}</b>
+
+        <br><br>
+
+        <a href="${data[4]}" target="_blank">
+          <button>DOWNLOAD SERTIFIKAT</button>
+        </a>
+
+      </div>
+      `;
+
+    }
+
+    else{
+
+      document.getElementById("hasil").innerHTML =
+
+      `
+      <div class="info">
+        Status belum tersedia
+      </div>
+      `;
+
+    }
+
+  }).cekNIK(nik);
+
 }
 
 </script>
+
 </body>
 </html>
